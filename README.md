@@ -11,8 +11,8 @@
 - To visualise Time distribution, a CSV file with count and time was created using tweet data and was loaded to D3. The distribution was visualised using line graph using D3
 - To visualise the Location Distribution, a geo JSON file was created which contains the latitude and longitude of the twetted users and a another World JSON file was created using GDAL and topojson which plots the world map on which geo data is projected upon.
 
-# Tine Distribution
-<img src="time_distribution.png" width=800 height=800 />
+# Time Distribution
+<img src="time_distribution.PNG" width=800 height=800 />
 
 # Location Distribution
-<img src="location_dist.png" width=800 height=800 />
+<img src="location_dist.PNG" width=800 height=800 />
