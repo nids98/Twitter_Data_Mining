@@ -12,7 +12,7 @@
 - To visualise the Location Distribution, a geo JSON file was created which contains the latitude and longitude of the twetted users and a another World JSON file was created using GDAL and topojson which plots the world map on which geo data is projected upon.
 
 # Time Distribution
-<img src="time_distribution.PNG" width=800 height=800 />
+<img src="time_distribution.PNG" width=1000 height=700 />
 
 # Location Distribution
-<img src="location_dist.PNG" width=800 height=800 />
+<img src="location_dist.PNG" width=1000 height=700 />
