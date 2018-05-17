@@ -1,0 +1,39 @@
+h1{
+	color: red;
+}
+html, body{
+  margin: 0;
+  height: 100%
+}
+line{
+  stroke: brown;
+}
+path{
+  stroke: steelblue;
+  stroke-width: 2px;
+  fill: none;
+}
+/*.dots path {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis--y line {
+  stroke-opacity: 0.2;
+}
+
+.axis--y path {
+  stroke: none;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}*/

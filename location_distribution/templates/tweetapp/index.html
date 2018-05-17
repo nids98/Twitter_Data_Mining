@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<meta charset="utf-8">
+<style>
+
+circle.outer {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+}
+circle.points{
+  fill: none;
+  stroke: red;
+}
+
+circle.bigPoints{
+  fill: none;
+}
+
+</style>
+<body>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+<!-- <script src="{%static "js/map_points_basic.js" %}" type="text/javascript"></script> -->
+<script>
+
+queue()
+	.defer(d3.json, "{%static "data/world.json" %}")
+	.defer(d3.json, "{%static "data/geoData.json" %}")
+	.await(makeMap);
+
+	// var q = d3.queue(2);
+	// q.defer(world);
+	// q.defer(geoData);
+	// q.await(makeMap);
+ // javascript is asynchronous; queue runs the awaiting makeMap function only after the data files load
+ //    q.defer(d3.json("{%static "data/world.json" %}",function(data)
+	// {
+	// 	console.log(data);
+	// }));
+	function world(callback){
+		d3.json("{%static "data/world.json" %}")
+		console.log('gg')
+	}
+	function geoData(callback){
+		d3.json("{%static "data/geoData.json" %}")
+		console.log('gg')
+	}
+  //.defer(d3.json("{%static "data/geoData.json" %}"))
+ // d3.json("{%static "data/geoData.json" %}")
+	//makeMap()
+function makeMap(error,world,geoData){
+	console.log('lol')
+    var width = 960,
+        height = 700;
+    
+    var projection = d3.geo.ginzburg5() 
+        .scale(180) // total map size adjustment 
+        .translate([width / 2, height / 2]) // map center 
+
+    var path = d3.geo.path() // a function that essentially just draws lines
+        .projection(projection); // translates the geo coords to screen coordinates
+  
+    var svg = d3.select("body").append("svg") // selections are arrays of dom elements
+        .attr("width", width) 
+        .attr("height", height)
+
+    var feature = svg.append("path") // appends a path element to the svg
+        .datum(topojson.feature(world, world.objects.land)) // accesses the land features and appends them to the path element
+        .attr("d", path) // uses the path function to add directions for how to draw
+        .attr("stroke","#000");  // adds the country outline
+
+    var bounds = svg.insert("path")
+      .datum(topojson.feature(world, world.objects.countries))
+      .attr("class", "boundary")
+      .attr("d", path)
+      .attr("fill","#ccc");
+
+    var large_circle = svg.selectAll(".bigPoints")
+                   .data(geoData.features) // selects features to bind to the elements classed as points 
+                   .enter() // binds the correct number of elements
+                   .append("circle") // adds data bound circle elements to the graph
+                   .style("stroke","steelblue")// overides the css to the color the circles
+                   .classed("bigPoints",true)
+                   .attr("cx",0)
+                   .attr("cy",0)
+                   .attr("transform", function(d){ return "translate("+path.centroid(d)+")"})// uses the path function to translate the long,lat into screen coords 
+                   .attr("r",20) // sets the radius
+
+    var small_circle = svg.selectAll(".points")
+                   .data(geoData.features) // selects features to bind to the elements classed as points 
+                   .enter() // binds the correct number of elements
+                   .append("circle") // adds data bound circle elements to the graph
+                   .classed("points",true) //  classes the circle elements
+                   .attr("cx",0)
+                   .attr("cy",0)
+                   .attr("transform", function(d){console.log(d); return "translate("+path.centroid(d)+")"})// uses the path function to translate the long,lat into screen coords 
+                   .attr("r",2) // sets the radius
+
+};
+</script>
+</body>
